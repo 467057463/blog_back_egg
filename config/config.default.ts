@@ -8,6 +8,14 @@ export default (appInfo: EggAppInfo) => {
       enable: false,
     },
   };
+  // jwt
+  config.jwt = {
+    secret: '_mmisme_1567156',
+  };
+  // 密码加密
+  config.bcrypt = {
+    saltRounds: 10,
+  };
 
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security

@@ -1,12 +1,12 @@
 import { Service } from 'egg';
 
 export default class ArticleService extends Service {
-  findAll(page = 1, quantity = 10){
+  findAll({page, size}){
     return this.ctx.model.Article.find()
       .populate('author', 'username')
       .sort({'createdAt':-1})
-      .skip((page - 1) * quantity)
-      .limit(quantity)
+      .skip((page - 1) * size)
+      .limit(size)
       .exec()
   }
 

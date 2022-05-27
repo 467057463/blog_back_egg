@@ -12,9 +12,9 @@ export default (app: Application) => {
       minlength: ['6', '用户名长度不能低于6个字符'],
       validate: {
         validator: function(v){
-          return /\d{3}-\d{3}-\d{4}/.test(v)
+          return /^[\d\w]{6,16}$/.test(v)
         },
-        message: '用户名格式不对'
+        message: '请输入6-16位数字或字符串'
       }
     },
     password: {
