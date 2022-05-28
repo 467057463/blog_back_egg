@@ -37,7 +37,8 @@ export default (appInfo: EggAppInfo) => {
         },
       }
     },
-    ERR_TYPE
+    ERR_TYPE,
+    uploadDir: 'app/public/upload'
   };
 
   // the return config will combines to EggAppConfig

@@ -5,9 +5,10 @@ export default (app: Application) => {
   const { controller, router } = app;
   const jwt = app.jwt;
   
-  router.get('/', controller.home.index);
+  // router.get('/', controller.home.index);
   router.post('/login', controller.home.login);
   router.post('/register', controller.home.register)
+  router.post('/upload_avatar', jwt, controller.home.uploadAvatar)
 
   router.get('/articles', controller.articles.index)
   router.post('/articles', jwt, controller.articles.create)

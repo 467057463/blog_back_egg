@@ -7,6 +7,11 @@ export default class UserService extends Service {
     return await this.ctx.model.User.findOne({username});
   }
 
+  // 根据id查找
+  async findById(id){
+    return await this.ctx.model.User.findById(id)
+  }
+
   // 注册
   async register(body){
     const { username, password } = body;
@@ -44,5 +49,12 @@ export default class UserService extends Service {
       user,
       token
     }
+  }
+
+  // 更新图像
+  async uploadAvatar(id, url){
+    return this.ctx.model.User.updateOne({_id: id}, {$set: {
+      avatar: url
+    }})
   }
 }

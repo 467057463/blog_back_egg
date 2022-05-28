@@ -1,6 +1,7 @@
 // @ts-nocheck
-// import * as jwt from 'jsonwebtoken';
 import { Controller } from 'egg';
+import * as fs from 'fs';
+import * as pump from 'pump';
 
 const LoginParams = {
   username: { type: 'string', required: true },
@@ -23,11 +24,6 @@ const RegisterParams = {
 
 
 export default class HomeController extends Controller {
-  public async index() {
-    const { ctx } = this;
-    ctx.body = await ctx.service.test.sayHi('egg');
-  }
-
   // 登录
   public async login(){
     const { ctx } = this;
@@ -60,5 +56,24 @@ export default class HomeController extends Controller {
     ctx.response.failure(
       this.config.ERR_TYPE.USERNAME_EXIST
     )
+  }
+
+  // 上传图像
+  public async uploadAvatar(){
+    const { ctx } = this;
+    const { _id } = ctx.state.user;  
+    const stream = await ctx.getFileStream();
+
+    const dir = await this.service.upload.getUploadFile(stream.filename);
+    const writeStream = fs.createWriteStream(dir.uploadDir)
+    await pump(stream, writeStream);
+
+    const user = await this.service.user.findById(_id)
+    const avatar = user.avatar;
+    await ctx.service.user.uploadAvatar(_id, dir.saveDir)
+    await fs.unlinkSync(avatar.replace(ctx.origin, 'app'))
+    ctx.response.success({
+      data: dir
+    })  
   }
 }

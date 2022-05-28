@@ -151,6 +151,6 @@ export default class ArticleController extends Controller{
         config.ERR_TYPE.ARTICLE_NOT_EXIST
       )
     }    
-    ctx.response.success({})
+    ctx.response.success()
   }
 }
