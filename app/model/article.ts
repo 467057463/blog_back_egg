@@ -17,10 +17,10 @@ export default (app: Application) => {
       ref: 'User',
       required: true,
     },
-    comments: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Comment'
-    }],
+    // comments: [{
+    //   type: Schema.Types.ObjectId,
+    //   ref: 'Comment'
+    // }],
     meta: {
       view: {
         type: Number,

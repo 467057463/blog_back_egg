@@ -1,5 +1,5 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
-
+import ERR_TYPE from './error';
 export default (appInfo: EggAppInfo) => {
   const config = {} as PowerPartial<EggAppConfig>;
 
@@ -11,6 +11,8 @@ export default (appInfo: EggAppInfo) => {
   // jwt
   config.jwt = {
     secret: '_mmisme_1567156',
+    // @ts-ignore
+    expiresIn: '30d'
   };
   // 密码加密
   config.bcrypt = {
@@ -22,7 +24,7 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1653556376955_3213';
 
   // add your egg config in here
-  config.middleware = [];
+  config.middleware = ['errorHandler'];
 
   // add your special config in here
   const bizConfig = {
@@ -34,7 +36,8 @@ export default (appInfo: EggAppInfo) => {
           useNewUrlParser: true,
         },
       }
-    }
+    },
+    ERR_TYPE
   };
 
   // the return config will combines to EggAppConfig
