@@ -8,5 +8,6 @@ export default {
   NOT_LOGIN: { code: '-30001', message: 'Not login.' }, // 未登录
   USERNAME_PASSWORD_ERR: {code: '-30002', message: '用户名或密码错误'},
   USERNAME_EXIST: {code: '-30003', message: '用户名已存在'},
-  ARTICLE_NOT_EXIST: {code: '-30004', message: '文章不存在'}
+  ARTICLE_NOT_EXIST: {code: '-30004', message: '文章不存在'},
+  TAG_IS_EXIST: {code: '-30005', message: '标签已存在'}
 }

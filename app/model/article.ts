@@ -17,6 +17,19 @@ export default (app: Application) => {
       ref: 'User',
       required: true,
     },
+    cover: {
+      type: String,
+      required: false
+    },
+    category: {
+      type: String,
+      enum: ['TECHNICAL', 'LIFE', 'PRIVACY', 'DRAFT'],
+      default: 'DRAFT'
+    },
+    tags: [{
+      ref: 'Tag',
+      type: Schema.Types.ObjectId,     
+    }],
     // comments: [{
     //   type: Schema.Types.ObjectId,
     //   ref: 'Comment'

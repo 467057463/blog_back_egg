@@ -1,12 +1,9 @@
 import { Service } from 'egg';
 import * as path from 'path';
-// import * as dayjs from 'dayjs';
-// const mkdirp = require('mkdirp');
 import * as mkdirp from 'mkdirp';
 
 export default class UploadService extends Service {
   async getUploadFile(filename, type = 'avatar') {
-    // const day = dayjs().format('YYYYMMDD');
     const dir = path.join(this.config.uploadDir, type);
     await mkdirp(dir);
 

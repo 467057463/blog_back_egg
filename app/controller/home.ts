@@ -62,15 +62,18 @@ export default class HomeController extends Controller {
   public async uploadAvatar(){
     const { ctx } = this;
     const { _id } = ctx.state.user;  
-    const stream = await ctx.getFileStream();
 
+    // 图片上传
+    const stream = await ctx.getFileStream();
     const dir = await this.service.upload.getUploadFile(stream.filename);
     const writeStream = fs.createWriteStream(dir.uploadDir)
     await pump(stream, writeStream);
 
+    // 数据库存储图片信息
     const user = await this.service.user.findById(_id)
     const avatar = user.avatar;
     await ctx.service.user.uploadAvatar(_id, dir.saveDir)
+    // 删除旧图片
     await fs.unlinkSync(avatar.replace(ctx.origin, 'app'))
     ctx.response.success({
       data: dir
