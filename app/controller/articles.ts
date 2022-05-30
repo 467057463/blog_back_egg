@@ -19,11 +19,12 @@ const indexParams = {
     max: 100, 
     default: 10 
   },
-  // category: {
-  //   type: 'string',
-  //   required: false,
-  //   default: "{}"
-  // }
+  category: {
+    type: 'enum',
+    values: ['TECHNICAL', 'LIFE', 'PRIVACY', 'DRAFT'],
+    default: "TECHNICAL",
+    required: false,
+  }
 };
 
 const createParams = {
@@ -39,8 +40,8 @@ export default class ArticleController extends Controller{
     ctx.validate(indexParams,ctx.request.query);
 
     // 构建查询参数并查询
-    const { page, size } = ctx.request.query;
-    const articles = await ctx.service.article.findAll({page, size})
+    const { page, size, category } = ctx.request.query;
+    const articles = await ctx.service.article.findAll({page, size, category})
 
     // 返回结果
     ctx.response.success({
@@ -168,6 +169,7 @@ export default class ArticleController extends Controller{
     const {fields, files} = await ctx.helper.parse(ctx.req);
     let {category, tags} = fields;
     tags = JSON.parse(fields.tags);
+    category = category || 'DRAFT';
 
     // 验证 id
     const article = await ctx.service.article.findById(id);

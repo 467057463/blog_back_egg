@@ -3,7 +3,7 @@ import { Service } from 'egg';
 export default class TagService extends Service {
   // 获取所有标签
   async findAllTags(){
-    return this.ctx.model.Tag.find()
+    return this.ctx.model.Tag.find({},{name: 1})
   }
 
   // 根据名称查找标签

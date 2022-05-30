@@ -2,12 +2,12 @@ import { Service } from 'egg';
 
 export default class ArticleService extends Service {
   // 列表
-  async findAll({page, size}){
+  async findAll({page, size, category}){
     const { ctx } = this;
     // 计算分页偏移量
     const offset = ctx.helper.calcPagingOffset(page, size);
-    const count = await ctx.model.Article.count();
-    const list = await  ctx.model.Article.find()
+    const count = await ctx.model.Article.find({category}).count();
+    const list = await  ctx.model.Article.find({category})
       .populate('author', 'username')
       .populate('tags', 'name')
       .sort({'createdAt':-1})
