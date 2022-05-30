@@ -64,15 +64,11 @@ export default class TagController extends Controller{
 
     // 构建查询参数并查询
     const { page, size } = ctx.request.query;
-    const countRes = await ctx.service.tag.tagArticlesCount(id);
-    const listRes = await ctx.service.tag.tagArticles(id, page, size)
-
-    const list = listRes.articles;
-    const count = countRes.articles.length;
+    const articles = await ctx.service.tag.tagArticles(id, page, size) 
 
     // 格式化数据并返回
     ctx.response.success({
-      data: ctx.helper.formatPagingData({ page, size, count, list })
+      data: articles
     })
   }
 }
