@@ -1,3 +1,5 @@
+import * as formidable from 'formidable';
+
 export default {
   now(){
     return Date.now();
@@ -23,5 +25,18 @@ export default {
         total: count,
       }
     };
+  },
+
+  // 解析 form-data
+  parse(req){
+    const form = new formidable.IncomingForm();
+    return new Promise((resolve, reject) => {
+      form.parse(req, (err, fields, files) => {
+        if(err){
+          reject(err)
+        }
+        resolve({ fields, files });
+      });
+    });
   }
 }

@@ -22,8 +22,7 @@ const RegisterParams = {
   }
 }
 
-
-export default class HomeController extends Controller {
+export default class UserController extends Controller {
   // 登录
   public async login(){
     const { ctx } = this;
