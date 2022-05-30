@@ -20,7 +20,7 @@ export default {
         currentPage: page,
         totalPage,
         size,
-        hasPrev: page > 1 && page < totalPage,
+        hasPrev: page > 1 && page <= totalPage,
         hasNext: page < totalPage,
         total: count,
       }

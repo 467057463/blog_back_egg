@@ -20,4 +20,5 @@ export default (app: Application) => {
 
   router.get('/api/v1/tags', controller.tags.index);
   router.post('/api/v1/tags', jwt, controller.tags.create);
+  router.get('/api/v1/tags/:id/articles', controller.tags.tagArticles);
 };

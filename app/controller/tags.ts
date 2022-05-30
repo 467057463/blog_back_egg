@@ -9,6 +9,23 @@ const CreateTagParams = {
   }
 }
 
+const TagArticlesParams = {
+  page: { 
+    type: 'int', 
+    convertType: 'int',
+    required: false, 
+    min: 1, 
+    default: 1
+  },
+  size: { 
+    type: 'int', 
+    convertType: 'int',
+    required: false, 
+    max: 100, 
+    default: 10 
+  },
+}
+
 export default class TagController extends Controller{
   // 标签列表 -获取所有标签
   async index(){
@@ -35,6 +52,27 @@ export default class TagController extends Controller{
     }
     ctx.response.success({
       data: tag
+    })
+  }
+
+  // 获取标签下的文章
+  async tagArticles(){
+    const { ctx, config } = this;
+    const { id } = ctx.params;
+    // 验证参数
+    ctx.validate(TagArticlesParams,ctx.request.query);
+
+    // 构建查询参数并查询
+    const { page, size } = ctx.request.query;
+    const countRes = await ctx.service.tag.tagArticlesCount(id);
+    const listRes = await ctx.service.tag.tagArticles(id, page, size)
+
+    const list = listRes.articles;
+    const count = countRes.articles.length;
+
+    // 格式化数据并返回
+    ctx.response.success({
+      data: ctx.helper.formatPagingData({ page, size, count, list })
     })
   }
 }
