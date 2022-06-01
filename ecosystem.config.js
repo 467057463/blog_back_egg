@@ -22,7 +22,7 @@ module.exports = {
       repo : 'git@github.com:467057463/blog_back_egg.git',
       path : '/var/www/blog_back_egg',
       'pre-deploy-local': '',
-      'post-deploy' : 'npm install && npm run tsc && pm2 reload ecosystem.config.js --env production',
+      'post-deploy' : 'npm install --production=false && npm run tsc && pm2 reload ecosystem.config.js --env production',
       'pre-setup': '',
       "env": {
         "NODE_ENV": "production"
