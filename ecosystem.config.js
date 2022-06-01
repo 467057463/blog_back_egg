@@ -4,7 +4,7 @@ module.exports = {
       name: 'blog_back_egg',
       script: 'npm',
       args: 'run start',
-      script: 'index.js',
+      // script: 'index.js',
       env: {
         "COMMON_VARIABLE": "true"
       },
