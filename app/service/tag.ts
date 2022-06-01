@@ -51,19 +51,22 @@ export default class TagService extends Service {
 
   // 获取标签下的文章
   async tagArticles(id, page = 1, size = 10){
-    const start = (page - 1) * size;
-    const end = page * size;
-    console.log(start, end)
-    // return this.ctx.model.Tag.findOne({_id: id}, {
-    //   _id: 0,
-    //   name: 0,
-    //   articles: {
-    //     $slice: [start, end]
-    //   }
-    // })
-    // .populate('articles')
-    return this.ctx.model.Tag.findOne({_id: id}, {
-      $in: 'articles'
+    // 计算分页偏移量
+    const offset = this.ctx.helper.calcPagingOffset(page, size);
+
+    const countRes = await this.ctx.model.Tag.findById(id);
+    const listRes = await this.ctx.model.Tag.findOne({_id: id}, {
+      _id: 0,
+      name: 0,
+      articles: {
+        $slice: [offset, size]
+      }
     })
+    .populate('articles')
+
+    const list = listRes.articles;
+    const count = countRes.articles.length;
+
+    return this.ctx.helper.formatPagingData({ page, size, count, list })
   }
 }
