@@ -18,6 +18,11 @@ export default (appInfo: EggAppInfo) => {
   config.bcrypt = {
     saltRounds: 10,
   };
+  // 跨域配置
+  config.cors = {
+    origin: '*', // 表示允许的源
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH' // 表示允许的http请求方式
+  };
 
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security

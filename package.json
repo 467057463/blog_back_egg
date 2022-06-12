@@ -25,6 +25,7 @@
     "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.2",
     "egg": "^2.6.1",
+    "egg-cors": "^2.2.3",
     "egg-jwt": "^3.1.7",
     "egg-mongoose": "^3.3.1",
     "egg-scripts": "^2.6.0",
