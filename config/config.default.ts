@@ -36,6 +36,7 @@ export default (appInfo: EggAppInfo) => {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
     mongoose: {
       client: {
+        // url: 'mongodb://95.179.164.10/blog',
         url: 'mongodb://localhost/blog',
         options: {
           useNewUrlParser: true,

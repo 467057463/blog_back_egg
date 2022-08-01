@@ -101,14 +101,14 @@ export default class ArticleService extends Service {
   }
 
   // 更新文章信息
-  async updateInfo(id, {cover, tags, category}){
+  async updateInfo(id, {describe, cover, tags, category}){
      // 检查是否存在
      const isExists = await this.findIdExists(id)
      if(!isExists){
        return;
      }
      return this.ctx.model.Article.findOneAndUpdate({_id: id}, {$set: {
-      cover, tags, category
+      describe, cover, tags, category
      }})
   }
 }

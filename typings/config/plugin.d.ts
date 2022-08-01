@@ -17,6 +17,7 @@ import 'egg-view';
 import 'egg-mongoose';
 import 'egg-jwt';
 import 'egg-validate';
+import 'egg-cors';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -35,5 +36,6 @@ declare module 'egg' {
     mongoose?: EggPluginItem;
     jwt?: EggPluginItem;
     validate?: EggPluginItem;
+    cors?: EggPluginItem;
   }
 }

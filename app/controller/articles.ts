@@ -167,7 +167,7 @@ export default class ArticleController extends Controller{
 
     // 解析form-data
     const {fields, files} = await ctx.helper.parse(ctx.req);
-    let {category, tags} = fields;
+    let {describe, category, tags, removeCover} = fields;
     tags = JSON.parse(fields.tags);
     category = category || 'DRAFT';
 
@@ -185,7 +185,7 @@ export default class ArticleController extends Controller{
     if(file){
       const stream = fs.createReadStream(file._writeStream.path)      
       dir = await this.service.upload.getUploadFile(file.originalFilename, 'cover');
-      const writeStream = fs.createWriteStream(dir.uploadDir)
+      const writeStream = fs.createWriteStream(dir.uploadDir + '.png')
       await pump(stream, writeStream);
     }
 
@@ -195,13 +195,14 @@ export default class ArticleController extends Controller{
     const removeTags = difference(originTags, tags);
 
     await ctx.service.article.updateInfo(id, {
+      describe,
       category,
       tags,
-      cover: file ? dir.saveDir: ''
+      cover: removeCover ? '' : file ? dir.saveDir + '.png': originCover
     })
 
     // 删除旧图片
-    if(file && originCover){
+    if((file && originCover) || removeCover){
       await fs.unlinkSync(originCover.replace(ctx.origin, 'app'))
     }
     if(addTags.length){

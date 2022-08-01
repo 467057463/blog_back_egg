@@ -17,6 +17,10 @@ export default (app: Application) => {
       ref: 'User',
       required: true,
     },
+    describe: {
+      type: String,
+      required: false
+    },
     cover: {
       type: String,
       required: false
