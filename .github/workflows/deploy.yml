@@ -1,0 +1,30 @@
+name: BLOG_API CI/CD
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: 22
+          script: |
+            cd /var/www/blog_back_egg
+            git pull origin production
+            git status
+            npm install
+            npm run tsc
+            npm run stop
+            npm run start 

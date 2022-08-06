@@ -62,7 +62,19 @@ export default class TagService extends Service {
         $slice: [offset, size]
       }
     })
-    .populate('articles')
+    // .populate('articles')
+    .populate({
+      path: 'articles',
+      populate:[{
+        path: 'author',
+        model: 'User',
+        select: "username"
+      }, {
+        path: 'tags',
+        model: 'Tag',
+        select: "name"
+      }]
+    })
 
     const list = listRes.articles;
     const count = countRes.articles.length;
