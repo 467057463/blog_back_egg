@@ -59,7 +59,11 @@ export default class TagService extends Service {
       _id: 0,
       name: 0,
       articles: {
-        $slice: [offset, size]
+        $slice: [offset, size],
+        $match: {
+          category: 'TECHNICAL'
+        },
+        $sort: {'createdAt':-1}
       }
     })
     // .populate('articles')
