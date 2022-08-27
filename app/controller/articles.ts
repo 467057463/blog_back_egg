@@ -203,7 +203,8 @@ export default class ArticleController extends Controller{
 
     // 删除旧图片
     if((file && originCover) || removeCover){
-      await fs.unlinkSync(originCover.replace(ctx.origin, 'app'))
+      const originUrl = ctx.origin.replace(/^http:/i, 'https:')
+      await fs.unlinkSync(originCover.replace(originUrl, 'app'))
     }
     if(addTags.length){
       await ctx.service.tag.tagAddArticle(addTags, id)
