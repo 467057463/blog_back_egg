@@ -72,10 +72,10 @@ export default class TagService extends Service {
       match: {
         category: 'TECHNICAL'
       },
-      options: {
-        // slice: [offset, size]
-        sort: { 'created_at': 1 }
-      },
+      // options: {
+      //   // slice: [offset, size]
+      //   sort: { 'created_at': 1 }
+      // },
       populate:[{
         path: 'author',
         model: 'User',
@@ -87,7 +87,9 @@ export default class TagService extends Service {
       }]
     })
 
-    const list = listRes.articles.slice(offset, page * size);
+    const list = listRes.articles.sort(function(itemA, itemB){
+      return +new Date(itemA.created_at) - +new Date(itemB.created_at)
+    }).slice(offset, page * size);
     const count = countRes.articles.length;
 
     return this.ctx.helper.formatPagingData({ page, size, count, list })
