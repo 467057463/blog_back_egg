@@ -9,9 +9,10 @@ export default class UploadService extends Service {
 
     const date = Date.now();
     let uploadDir = path.join(dir, date + path.extname(filename));
+    const originUrl = this.ctx.origin.replace(/^http:/i, 'https:')
     return {
       uploadDir,
-      saveDir: this.ctx.origin + uploadDir.slice(3).replace(/\\/g, '/')
+      saveDir: originUrl + uploadDir.slice(3).replace(/\\/g, '/')
     }
   } 
 }
