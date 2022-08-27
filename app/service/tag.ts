@@ -74,7 +74,7 @@ export default class TagService extends Service {
       },
       options: {
         // slice: [offset, size]
-        sort: { 'createdAt': 1 }
+        sort: { 'createdAt': -1 }
       },
       populate:[{
         path: 'author',
