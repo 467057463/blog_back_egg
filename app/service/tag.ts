@@ -58,17 +58,24 @@ export default class TagService extends Service {
     const listRes = await this.ctx.model.Tag.findOne({_id: id}, {
       _id: 0,
       name: 0,
-      articles: {
-        $slice: [offset, size],
-        $match: {
-          category: 'TECHNICAL'
-        },
-        $sort: {'createdAt':-1}
-      }
+      // articles: {
+        // $slice: [offset, size],
+        // $match: {
+        //   category: 'TECHNICAL'
+        // },
+        // $sort: [{'createdAt':-1}]
+      // }
     })
     // .populate('articles')
     .populate({
       path: 'articles',
+      match: {
+        category: 'TECHNICAL'
+      },
+      options: {
+        // slice: [offset, size]
+        sort: { 'created_at': -1 }
+      },
       populate:[{
         path: 'author',
         model: 'User',
@@ -80,7 +87,7 @@ export default class TagService extends Service {
       }]
     })
 
-    const list = listRes.articles;
+    const list = listRes.articles.slice(offset, page * size);
     const count = countRes.articles.length;
 
     return this.ctx.helper.formatPagingData({ page, size, count, list })
